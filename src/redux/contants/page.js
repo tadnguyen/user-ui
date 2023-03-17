@@ -1,0 +1,3 @@
+
+export const SET_USERS_PER_PAGE = 'SET_USERS_PER_PAGE';
+export const SET_USERS_PAGE = 'SET_USERS_PAGE';

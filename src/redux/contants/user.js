@@ -1,0 +1,5 @@
+export const GET_USER_REQ = 'GET_USER_REQ';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+
+export const SORT_BY_USER_FULLNAME = 'SORT_BY_USER_FULLNAME';
+export const SORT_BY_USERNAME = 'SORT_BY_USERNAME';
