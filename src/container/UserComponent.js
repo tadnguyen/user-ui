@@ -110,7 +110,7 @@ const UserComponent = () => {
                     {
                         <TablePagination
                             rowsPerPageOptions={[10, 20, 100]}
-                            count={3399}
+                            count={2000}
                             rowsPerPage={usersPerPage}
                             page={usersPage}
                             onPageChange={handleChangePage}
