@@ -100,7 +100,7 @@ const UserComponent = () => {
                     {users?.map((user, index) => {
                         return (
                             <tr key={index}>
-                                <td data-label="STT">{index + 1}</td>
+                                <td data-label="STT">{(usersPage * usersPerPage) + index + 1}</td>
                                 <td data-label="FullName">{`${user.name.title}` + ` ${user.name.first}` + ` ${user.name.last}`}</td>
                                 <td data-label="UserName">{user.login.username}</td>
                                 <td data-label="Thumbnail Icon">{user.picture.thumbnail}</td>
