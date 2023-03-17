@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUserReq, sortByUserFullName, sortByUserName } from '../redux/actions/usersAction';
-import { setUsersPage, setUsersPerPage } from '../redux/actions/pageAction';
 import sortUsers from './sortUsers';
 import {
     Button,
@@ -17,15 +16,14 @@ const UserComponent = () => {
     const [sort, setSort] = useState(true);
     const users = useSelector((state) => state.usersReducer.users);
     const dispatch = useDispatch();
-    const usersPage = useSelector((state) => state.pageReducer.usersPage);
-    const usersPerPage = useSelector(
-        (state) => state.pageReducer.usersPerPage
-    );
     const history = useHistory();
+    const [usersPage, setUsersPage] = useState(0);
+
+    const [usersPerPage, setUsersPerPage] = useState(10);
 
     useEffect(() => {
         dispatch(getAllUserReq({ page: usersPage + 1, results: usersPerPage }));
-    }, [usersPage, usersPerPage]);
+    }, []);
 
     //Sort user
     const handleSortByUserFullName = () => {
@@ -43,7 +41,8 @@ const UserComponent = () => {
 
     //Xu ly phan trang
     const handleChangePage = (e, newPage) => {
-        dispatch(setUsersPage(newPage, 'SET_USERS_PAGE'));
+        setUsersPage(newPage);
+        dispatch(getAllUserReq({ page: newPage, results: usersPerPage}));
         history.push({
             pathname: '/',
             hash: '',
@@ -51,8 +50,9 @@ const UserComponent = () => {
         });
     };
     const handleChangePerPage = (e) => {
-        dispatch(setUsersPerPage(e.target.value, 'SET_USERS_PER_PAGE'));
-        dispatch(setUsersPage(0, 'SET_USERS_PAGE'));
+        setUsersPerPage(e.target.value);
+        setUsersPage(0);
+        dispatch(getAllUserReq({ page: 1, results: e.target.value }));
         history.push({
             pathname: '/',
             hash: '',
@@ -64,6 +64,7 @@ const UserComponent = () => {
             <table class="ui celled table">
                 <thead>
                     <tr>
+                        <th>STT</th>
                         <th>
                             <Button onClick={handleSortByUserFullName}>
                                 FullName
@@ -96,9 +97,10 @@ const UserComponent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users?.map(user => {
+                    {users?.map((user, index) => {
                         return (
-                            <tr key={user.id.value}>
+                            <tr key={index}>
+                                <td data-label="STT">{index + 1}</td>
                                 <td data-label="FullName">{`${user.name.title}` + ` ${user.name.first}` + ` ${user.name.last}`}</td>
                                 <td data-label="UserName">{user.login.username}</td>
                                 <td data-label="Thumbnail Icon">{user.picture.thumbnail}</td>
